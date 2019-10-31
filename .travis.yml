@@ -1,0 +1,10 @@
+language: rust
+rust:
+  - stable
+os:
+  - linux
+script:
+  - cargo test --verbose
+notifications:
+  email:
+    on_success: never

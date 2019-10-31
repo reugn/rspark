@@ -1,10 +1,12 @@
 mod rspark {
 
-    const Ticks: [char; 8] = [
+    #[allow(dead_code)]
+    const TICKS: [char; 8] = [
         '\u{2581}', '\u{2582}', '\u{2583}', '\u{2584}', '\u{2585}', '\u{2586}', '\u{2587}',
         '\u{2588}',
     ];
 
+    #[allow(dead_code)]
     pub fn render(v: &Vec<i32>) -> Result<String, &'static str> {
         if v.len() < 2 {
             return Err("Invalid vector parameter");
@@ -15,7 +17,7 @@ mod rspark {
         let mut s = String::new();
         for e in v.iter() {
             let i = (e - min) / scale as i32;
-            s.push_str(&Ticks[i as usize].to_string());
+            s.push_str(&TICKS[i as usize].to_string());
         }
         Ok(s)
     }

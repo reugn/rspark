@@ -6,8 +6,8 @@ mod rspark {
     ];
 
     pub fn render(v: &Vec<i32>) -> Result<String, &'static str> {
-        if v.is_empty() {
-            return Err("Empty vector parameter");
+        if v.len() < 2 {
+            return Err("Invalid vector parameter");
         }
         let max = v.iter().max().unwrap();
         let min = v.iter().min().unwrap();
@@ -31,5 +31,15 @@ mod tests {
         let res = rspark::render(&v).unwrap();
         println!("{}", res);
         assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
+    }
+
+    #[test]
+    fn test_render_err() {
+        let v = vec![2];
+        let res = rspark::render(&v);
+        match res {
+            Ok(_) => panic!("Error expected."),
+            _ => (),
+        }
     }
 }

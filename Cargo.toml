@@ -2,7 +2,16 @@
 name = "rspark"
 version = "0.1.0"
 authors = ["reugn <reugpro@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/reugn/rspark"
+keywords = ["cli", "format"]
+categories = ["command-line-interface", "value-formatting"]
+exclude = ["/.travis.yml", ".gitignore"]
 edition = "2018"
+
+[badges]
+travis-ci = { repository = "reugn/rspark" }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

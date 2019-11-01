@@ -10,7 +10,7 @@ Rust port of https://github.com/holman/spark
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-rspark = "0.1.0"
+rspark = "0.2.0"
 ```
 
 Example:

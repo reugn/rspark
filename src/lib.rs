@@ -1,25 +1,85 @@
-mod rspark {
+#![crate_name = "rspark"]
 
-    #[allow(dead_code)]
+pub mod rspark {
+
+    use std::error::Error;
+    use std::fmt;
+
+    /// Unicode graph ticks representation
     const TICKS: [char; 8] = [
         '\u{2581}', '\u{2582}', '\u{2583}', '\u{2584}', '\u{2585}', '\u{2586}', '\u{2587}',
         '\u{2588}',
     ];
 
-    #[allow(dead_code)]
-    pub fn render(v: &Vec<i32>) -> Result<String, &'static str> {
+    /// Renders graph for input vector
+    ///
+    /// # Arguments
+    ///
+    /// * `v` - Input numeric vector
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let v = vec![2, 250, 670, 890, 2, 430, 11, 908, 123, 57];
+    /// let res = rspark::rspark::render(&v).unwrap();
+    /// assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
+    /// ```
+    pub fn render(v: &Vec<i32>) -> Result<String, RenderError> {
+        let mut s = String::new();
+        render_to(v, &mut s)
+            .map(|ok_val| ok_val.to_string())
+            .map_err(|err_val| err_val)
+    }
+
+    /// Appends rendered graph for input vector to given string
+    ///
+    /// # Arguments
+    ///
+    /// * `v` - Input numeric vector
+    /// * `s` - Mutable String pointer for rendered graph
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let v = vec![2, 250, 670, 890, 2, 430, 11, 908, 123, 57];
+    /// let mut s = String::new();
+    /// let res = rspark::rspark::render_to(&v, &mut s).unwrap();
+    /// assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
+    /// ```
+    pub fn render_to<'a>(v: &Vec<i32>, s: &'a mut String) -> Result<&'a str, RenderError> {
         if v.len() < 2 {
-            return Err("Invalid vector parameter");
+            return Err(RenderError::InvalidVectorParameter);
         }
         let max = v.iter().max().unwrap();
         let min = v.iter().min().unwrap();
         let scale = (max - min) as f32 / 7.;
-        let mut s = String::new();
         for e in v.iter() {
             let i = (e - min) / scale as i32;
-            s.push_str(&TICKS[i as usize].to_string());
+            (*s).push_str(&TICKS[i as usize].to_string());
         }
-        Ok(s)
+        Ok(&s[..])
+    }
+
+    #[derive(Debug)]
+    pub enum RenderError {
+        /// Invalid vector parameter error
+        InvalidVectorParameter,
+    }
+
+    impl fmt::Display for RenderError {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            match *self {
+                RenderError::InvalidVectorParameter => f.write_str("InvalidVectorParameter"),
+            }
+        }
+    }
+
+    impl Error for RenderError {
+        fn description(&self) -> &str {
+            match *self {
+                RenderError::InvalidVectorParameter => "Invalid vector parameter",
+            }
+        }
     }
 }
 
@@ -31,6 +91,15 @@ mod tests {
     fn test_render() {
         let v = vec![2, 250, 670, 890, 2, 430, 11, 908, 123, 57];
         let res = rspark::render(&v).unwrap();
+        println!("{}", res);
+        assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
+    }
+
+    #[test]
+    fn test_render_to() {
+        let v = vec![2, 250, 670, 890, 2, 430, 11, 908, 123, 57];
+        let mut s = String::new();
+        let res = rspark::render_to(&v, &mut s).unwrap();
         println!("{}", res);
         assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
     }

@@ -1,13 +1,13 @@
 # rspark ▁▂▆▇▁▄█▁
-[![Build Status](https://travis-ci.org/reugn/rspark.svg?branch=master)](https://travis-ci.org/reugn/rspark)
+[![Build](https://github.com/reugn/rspark/actions/workflows/build.yml/badge.svg)](https://github.com/reugn/rspark/actions/workflows/build.yml)
 [![Crate](https://img.shields.io/crates/v/rspark.svg)](https://crates.io/crates/rspark)
 
-Sparklines for Rust apps.  
-Rust port of https://github.com/holman/spark
+Sparklines library for Rust applications.  
+A Rust port of [spark](https://github.com/holman/spark).
 
 ## Usage
 
-Add this to your `Cargo.toml`:
+Add `rspark` to your `Cargo.toml`:
 ```toml
 [dependencies]
 rspark = "0.2.0"

@@ -5,17 +5,17 @@ pub mod rspark {
     use std::error::Error;
     use std::fmt;
 
-    /// Unicode graph ticks representation
+    /// The Unicode representation of the graph ticks.
     const TICKS: [char; 8] = [
         '\u{2581}', '\u{2582}', '\u{2583}', '\u{2584}', '\u{2585}', '\u{2586}', '\u{2587}',
         '\u{2588}',
     ];
 
-    /// Renders graph for input vector
+    /// Renders a graph for the given numeric vector.
     ///
     /// # Arguments
     ///
-    /// * `v` - Input numeric vector
+    /// * `v` - The numeric vector to render a graph.
     ///
     /// # Examples
     ///
@@ -31,20 +31,20 @@ pub mod rspark {
             .map_err(|err_val| err_val)
     }
 
-    /// Appends rendered graph for input vector to given string
+    /// Renders a graph and appends it to the given string.
     ///
     /// # Arguments
     ///
-    /// * `v` - Input numeric vector
-    /// * `s` - Mutable String pointer for rendered graph
+    /// * `v` - The numeric vector to render a graph.
+    /// * `s` - The mutable String pointer to append the graph.
     ///
     /// # Examples
     ///
     /// ```
     /// let v = vec![2, 250, 670, 890, 2, 430, 11, 908, 123, 57];
-    /// let mut s = String::new();
+    /// let mut s = String::from(">");
     /// let res = rspark::rspark::render_to(&v, &mut s).unwrap();
-    /// assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
+    /// assert_eq!(">▁▂▆▇▁▄▁█▁▁", res);
     /// ```
     pub fn render_to<'a>(v: &Vec<i32>, s: &'a mut String) -> Result<&'a str, RenderError> {
         if v.len() < 2 {
@@ -62,7 +62,7 @@ pub mod rspark {
 
     #[derive(Debug)]
     pub enum RenderError {
-        /// Invalid vector parameter error
+        /// The invalid vector parameter error.
         InvalidVectorParameter,
     }
 
@@ -98,10 +98,10 @@ mod tests {
     #[test]
     fn test_render_to() {
         let v = vec![2, 250, 670, 890, 2, 430, 11, 908, 123, 57];
-        let mut s = String::new();
+        let mut s = String::from(">");
         let res = rspark::render_to(&v, &mut s).unwrap();
         println!("{}", res);
-        assert_eq!("▁▂▆▇▁▄▁█▁▁", res);
+        assert_eq!(">▁▂▆▇▁▄▁█▁▁", res);
     }
 
     #[test]
